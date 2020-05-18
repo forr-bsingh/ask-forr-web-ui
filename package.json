@@ -58,7 +58,10 @@
     "style-loader": "^0.19.1",
     "webpack": "^4.43.0",
     "webpack-bundle-analyzer": ">=3.3.2",
-    "webpack-dev-server": "^3.1.11"
+    "webpack-dev-server": "^3.1.11",
+    "acorn": ">=5.7.4",
+    "minimist": ">=0.2.1",
+    "serialize-javascript": ">=2.1.1"
   },
   "engines": {
     "node": ">= 10.16.3",
