@@ -31,7 +31,8 @@
     "ajv": "^6.12.2",
     "amazon-cognito-auth-js": "^1.2.4",
     "babel-polyfill": "^6.26.0",
-    "jsonwebtoken": "^8.3.0"
+    "jsonwebtoken": "^8.3.0",
+    "uglifyjs-webpack-plugin": "^2.2.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.2.5",

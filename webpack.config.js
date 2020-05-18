@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const eslintFriendlyFormatter = require('eslint-friendly-formatter');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const basePath = __dirname;
 const VERSION = JSON.stringify(require('./package.json').version);
@@ -73,7 +74,7 @@ module.exports = (env) => {
         'process.env.NODE_ENV': JSON.stringify(buildEnv),
       }),
       new webpack.optimize.ModuleConcatenationPlugin(),
-      isProd && new webpack.optimize.UglifyJsPlugin({
+      /* isProd && new webpack.optimize.UglifyJsPlugin({
         compress: {
           warnings: false,
           drop_console: true,
@@ -81,18 +82,14 @@ module.exports = (env) => {
         },
         sourceMap: true,
         parallel: true
-      }),
+      }), */
       isProd && new webpack.BannerPlugin({
-        banner: `/*!
-* lex-web-ui v${VERSION}
-* (c) 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-* Released under the Amazon Software License.
-*/  `,
+        banner: '',
         raw: true,
-        entryOnly: true,
+        entryOnly: true
       }),
       new ExtractTextPlugin({
-        filename: (isProd) ? '[name].min.css' : '[name].css',
+        filename: (isProd) ? '[name].min.css' : '[name].css'
       }),
       // dev plugins
       !isProd && new webpack.NamedModulesPlugin(),
@@ -101,5 +98,20 @@ module.exports = (env) => {
     ]
       // filter empty items produced by isProd conditionals
       .filter(i => !!i),
-  };
+    optimization: {
+      minimizer: [
+        // we specify a custom UglifyJsPlugin here to get source maps in production
+        new UglifyJsPlugin({
+          cache: true,
+          parallel: true,
+          uglifyOptions: {
+            compress: false,
+            ecma: 6,
+            mangle: true
+          },
+          sourceMap: true
+        })
+      ]
+    }
+  }
 };
