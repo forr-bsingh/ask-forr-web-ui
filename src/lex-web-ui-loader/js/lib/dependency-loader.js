@@ -159,12 +159,12 @@ export class DependencyLoader {
     }
 
     // dependency url - can be automatically changed to a min link
-    const minUrl = (useMin && dependency.canUseMin) ?
-      DependencyLoader.getMinUrl(dependency.url) : dependency.url;
+    const minUrl = (useMin && dependency.canUseMin)
+      ? DependencyLoader.getMinUrl(dependency.url) : dependency.url;
 
     // add base URL to relative URLs
-    const url = (minUrl.match('^http')) ?
-      minUrl : `${baseUrl}${minUrl}`;
+    const url = (minUrl.match('^http'))
+      ? minUrl : `${baseUrl}${minUrl}`;
 
     // element id - uses naming convention of <lower case name>-<type>
     const elId = `${String(name).toLowerCase()}-${type}`;

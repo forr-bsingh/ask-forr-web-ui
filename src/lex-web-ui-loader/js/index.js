@@ -73,9 +73,8 @@ class Loader {
     this.options = options;
 
     // append a trailing slash if not present in the baseUrl
-    this.options.baseUrl =
-      (this.options.baseUrl && baseUrl[baseUrl.length - 1] === '/') ?
-        this.options.baseUrl : `${this.options.baseUrl}/`;
+    this.options.baseUrl = (this.options.baseUrl && baseUrl[baseUrl.length - 1] === '/')
+      ? this.options.baseUrl : `${this.options.baseUrl}/`;
 
     this.confLoader = new ConfigLoader(this.options);
   }
@@ -165,8 +164,8 @@ export class IframeLoader extends Loader {
         // configured by standard mechanisms. At this point, default
         // values from ./defaults/loader.js will be used.
         this.config.iframe = this.config.iframe || {};
-        this.config.iframe.iframeSrcPath = this.config.iframe.iframeSrcPath ||
-          this.mergeSrcPath(configParam);
+        this.config.iframe.iframeSrcPath = this.config.iframe.iframeSrcPath
+          || this.mergeSrcPath(configParam);
       });
   }
 
@@ -175,11 +174,9 @@ export class IframeLoader extends Loader {
    */
   mergeSrcPath(configParam) {
     const { iframe: iframeConfigFromParam } = configParam;
-    const srcPathFromParam =
-      iframeConfigFromParam && iframeConfigFromParam.iframeSrcPath;
+    const srcPathFromParam = iframeConfigFromParam && iframeConfigFromParam.iframeSrcPath;
     const { iframe: iframeConfigFromThis } = this.config;
-    const srcPathFromThis =
-      iframeConfigFromThis && iframeConfigFromThis.iframeSrcPath;
+    const srcPathFromThis = iframeConfigFromThis && iframeConfigFromThis.iframeSrcPath;
 
     return (srcPathFromParam || this.options.iframeSrcPath || srcPathFromThis);
   }

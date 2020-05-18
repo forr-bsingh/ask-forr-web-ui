@@ -14,7 +14,9 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "debug", "info"] }] */
 /* global AWS LexWebUi Vue */
 import { ConfigLoader } from './config-loader';
-import { logout, login, completeLogin, completeLogout, getAuth, refreshLogin, isTokenExpired } from './loginutil';
+import {
+  logout, login, completeLogin, completeLogout, getAuth, refreshLogin, isTokenExpired,
+} from './loginutil';
 
 /**
  * Instantiates and mounts the chatbot component
@@ -72,10 +74,8 @@ export class FullPageComponentLoader {
       event: 'confirmLogin',
       data: tokens,
     });
-    const { poolId: cognitoPoolId } =
-      this.config.cognito;
-    const region =
-        this.config.cognito.region || this.config.region || this.config.cognito.poolId.split(':')[0] || 'us-east-1';
+    const { poolId: cognitoPoolId } = this.config.cognito;
+    const region = this.config.cognito.region || this.config.region || this.config.cognito.poolId.split(':')[0] || 'us-east-1';
     const poolName = `cognito-idp.${region}.amazonaws.com/${this.config.cognito.appUserPoolName}`;
 
     let credentials;
@@ -173,18 +173,16 @@ export class FullPageComponentLoader {
           FullPageComponentLoader.sendMessageToComponent({ event: 'confirmLogout' });
         }
       }
-      const { poolId: cognitoPoolId } =
-        this.config.cognito;
-      const region =
-          this.config.cognito.region || this.config.region || this.config.cognito.poolId.split(':')[0] || 'us-east-1';
+      const { poolId: cognitoPoolId } = this.config.cognito;
+      const region = this.config.cognito.region || this.config.region || this.config.cognito.poolId.split(':')[0] || 'us-east-1';
       const poolName = `cognito-idp.${region}.amazonaws.com/${this.config.cognito.appUserPoolName}`;
 
       if (!cognitoPoolId) {
         return reject(new Error('missing cognito poolId config'));
       }
 
-      if (!('AWS' in window) ||
-        !('CognitoIdentityCredentials' in window.AWS)
+      if (!('AWS' in window)
+        || !('CognitoIdentityCredentials' in window.AWS)
       ) {
         return reject(new Error('unable to find AWS SDK global object'));
       }
@@ -254,7 +252,7 @@ export class FullPageComponentLoader {
   initPageToComponentApi() {
     this.api = {
       ping: () => FullPageComponentLoader.sendMessageToComponent({ event: 'ping' }),
-      postText: message => (
+      postText: (message) => (
         FullPageComponentLoader.sendMessageToComponent({ event: 'postText', message })
       ),
     };
@@ -288,12 +286,11 @@ export class FullPageComponentLoader {
    */
   load(configParam) {
     const mergedConfig = ConfigLoader.mergeConfig(this.config, configParam);
-    mergedConfig.region =
-        mergedConfig.region || mergedConfig.cognito.region || mergedConfig.cognito.poolId.split(':')[0] || 'us-east-1';
+    mergedConfig.region = mergedConfig.region || mergedConfig.cognito.region || mergedConfig.cognito.poolId.split(':')[0] || 'us-east-1';
     this.config = mergedConfig;
     if (this.isRunningEmbeded()) {
       return FullPageComponentLoader.createComponent(mergedConfig)
-        .then(lexWebUi => (
+        .then((lexWebUi) => (
           FullPageComponentLoader.mountComponent(this.elementId, lexWebUi)
         ));
     }

@@ -16,7 +16,9 @@
 
 import 'babel-polyfill';
 import { ConfigLoader } from './config-loader';
-import { logout, login, completeLogin, completeLogout, getAuth, refreshLogin, isTokenExpired } from './loginutil';
+import {
+  logout, login, completeLogin, completeLogout, getAuth, refreshLogin, isTokenExpired,
+} from './loginutil';
 
 /**
  * Instantiates and mounts the chatbot component in an iframe
@@ -60,16 +62,14 @@ export class IframeComponentLoader {
     const iframeConfig = this.config.iframe;
     // assign the iframeOrigin if not found in config
     if (!(('iframeOrigin' in iframeConfig) && iframeConfig.iframeOrigin)) {
-      this.config.iframe.iframeOrigin =
-        this.config.parentOrigin || window.location.origin;
+      this.config.iframe.iframeOrigin = this.config.parentOrigin || window.location.origin;
     }
     if (iframeConfig.shouldLoadIframeMinimized === undefined) {
       this.config.iframe.shouldLoadIframeMinimized = true;
     }
     // assign parentOrigin if not found in config
     if (!(this.config.parentOrigin)) {
-      this.config.parentOrigin =
-       this.config.iframe.iframeOrigin || window.location.origin;
+      this.config.parentOrigin = this.config.iframe.iframeOrigin || window.location.origin;
     }
     // validate config
     if (!IframeComponentLoader.validateConfig(this.config)) {
@@ -161,10 +161,8 @@ export class IframeComponentLoader {
    * request in the Vue component.
    */
   updateCredentials() {
-    const { poolId: cognitoPoolId } =
-      this.config.cognito;
-    const region =
-      this.config.cognito.region || this.config.region || this.config.cognito.poolId.split(':')[0] || 'us-east-1';
+    const { poolId: cognitoPoolId } = this.config.cognito;
+    const region = this.config.cognito.region || this.config.region || this.config.cognito.poolId.split(':')[0] || 'us-east-1';
     const poolName = `cognito-idp.${region}.amazonaws.com/${this.config.cognito.appUserPoolName}`;
     let credentials;
     const idtoken = localStorage.getItem('idtokenjwt');
@@ -243,15 +241,14 @@ export class IframeComponentLoader {
         }
       }
       const { poolId: cognitoPoolId } = this.config.cognito;
-      const region =
-          this.config.cognito.region || this.config.region || this.config.cognito.poolId.split(':')[0] || 'us-east-1';
+      const region = this.config.cognito.region || this.config.region || this.config.cognito.poolId.split(':')[0] || 'us-east-1';
       const poolName = `cognito-idp.${region}.amazonaws.com/${this.config.cognito.appUserPoolName}`;
       if (!cognitoPoolId) {
         return reject(new Error('missing cognito poolId config'));
       }
 
-      if (!('AWS' in window) ||
-        !('CognitoIdentityCredentials' in window.AWS)
+      if (!('AWS' in window)
+        || !('CognitoIdentityCredentials' in window.AWS)
       ) {
         return reject(new Error('unable to find AWS SDK global object'));
       }
@@ -317,13 +314,12 @@ export class IframeComponentLoader {
    * Message handler - receives postMessage events from iframe
    */
   onMessageFromIframe(evt) {
-    const iframeOrigin =
-      (
-        'iframe' in this.config &&
-        typeof this.config.iframe.iframeOrigin === 'string'
-      ) ?
-        this.config.iframe.iframeOrigin :
-        window.location.origin;
+    const iframeOrigin = (
+      'iframe' in this.config
+        && typeof this.config.iframe.iframeOrigin === 'string'
+    )
+      ? this.config.iframe.iframeOrigin
+      : window.location.origin;
 
     // SECURITY: origin check
     if (evt.origin !== iframeOrigin) {
@@ -508,11 +504,9 @@ export class IframeComponentLoader {
         return reject(new Error('chatbot loading time out'));
       };
 
-      readyManager.timeoutId =
-        setTimeout(readyManager.onConfigEventTimeout, timeoutInMs);
+      readyManager.timeoutId = setTimeout(readyManager.onConfigEventTimeout, timeoutInMs);
 
-      readyManager.intervalId =
-        setInterval(readyManager.checkIsChatBotReady, 500);
+      readyManager.intervalId = setInterval(readyManager.checkIsChatBotReady, 500);
     });
   }
 
@@ -650,9 +644,9 @@ export class IframeComponentLoader {
    * Send a message to the iframe using postMessage
    */
   sendMessageToIframe(message) {
-    if (!this.iframeElement ||
-      !('contentWindow' in this.iframeElement) ||
-      !('postMessage' in this.iframeElement.contentWindow)
+    if (!this.iframeElement
+      || !('contentWindow' in this.iframeElement)
+      || !('postMessage' in this.iframeElement.contentWindow)
     ) {
       return Promise.reject(new Error('invalid iframe element'));
     }
@@ -735,8 +729,8 @@ export class IframeComponentLoader {
    * to the iframe using postMessage
    */
   onMessageToIframe(evt) {
-    if (!evt || !('detail' in evt) || !evt.detail ||
-      !('message' in evt.detail)
+    if (!evt || !('detail' in evt) || !evt.detail
+      || !('message' in evt.detail)
     ) {
       return Promise.reject(new Error('malformed message to iframe event'));
     }
@@ -756,7 +750,7 @@ export class IframeComponentLoader {
       toggleMinimizeUi: () => (
         this.sendMessageToIframe({ event: 'toggleMinimizeUi' })
       ),
-      postText: message => (
+      postText: (message) => (
         this.sendMessageToIframe({ event: 'postText', message })
       ),
       deleteSession: () => (

@@ -13,7 +13,7 @@ module.exports = (env) => {
   return {
     context: path.join(basePath, 'src/lex-web-ui-loader/js'),
     entry: {
-      'lex-web-ui-loader': './index.js',
+      'lex-web-ui-loader': './index.js'
     },
     output: {
       path: path.join(basePath, 'dist'),
@@ -62,11 +62,11 @@ module.exports = (env) => {
       overlay: { warnings: false, errors: true },
       stats: 'errors-only',
       watchOptions: {
-        poll: true,
-      },
+        poll: true
+      }
     },
     stats: {
-      modules: false,
+      modules: false
     },
     plugins: [
       new webpack.DefinePlugin({
@@ -77,10 +77,10 @@ module.exports = (env) => {
         compress: {
           warnings: false,
           drop_console: true,
-          drop_debugger: true,
+          drop_debugger: true
         },
         sourceMap: true,
-        parallel: true,
+        parallel: true
       }),
       isProd && new webpack.BannerPlugin({
         banner: `/*!

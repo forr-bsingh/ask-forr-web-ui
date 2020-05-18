@@ -47,34 +47,34 @@ export class ConfigLoader {
       .then(() => {
         if (this.options.shouldLoadConfigFromJsonFile) {
           // append baseUrl to config if it's relative
-          const url = (this.options.configUrl.match('^http')) ?
-            this.options.configUrl :
-            `${this.options.baseUrl}${this.options.configUrl}`;
+          const url = (this.options.configUrl.match('^http'))
+            ? this.options.configUrl
+            : `${this.options.baseUrl}${this.options.configUrl}`;
           return ConfigLoader.loadJsonFile(url);
         }
         return Promise.resolve({});
       })
       // mobile hub
-      .then(mergedConfigFromJson => (
-        (this.options.shouldLoadConfigFromMobileHubFile) ?
-          ConfigLoader.mergeMobileHubConfig(mergedConfigFromJson) :
-          Promise.resolve(mergedConfigFromJson)
+      .then((mergedConfigFromJson) => (
+        (this.options.shouldLoadConfigFromMobileHubFile)
+          ? ConfigLoader.mergeMobileHubConfig(mergedConfigFromJson)
+          : Promise.resolve(mergedConfigFromJson)
       ))
       // event
-      .then(mergedConfigFromMobileHub => (
-        (this.options.shouldLoadConfigFromEvent) ?
-          ConfigLoader.loadConfigFromEvent(
+      .then((mergedConfigFromMobileHub) => (
+        (this.options.shouldLoadConfigFromEvent)
+          ? ConfigLoader.loadConfigFromEvent(
             mergedConfigFromMobileHub,
             this.options.configEventTimeoutInMs,
-          ) :
-          Promise.resolve(mergedConfigFromMobileHub)
+          )
+          : Promise.resolve(mergedConfigFromMobileHub)
       ))
       // filter config when running embedded
-      .then(mergedConfigFromEvent => (
+      .then((mergedConfigFromEvent) => (
         this.filterConfigWhenEmedded(mergedConfigFromEvent)
       ))
       // merge config from parameter
-      .then(config => (ConfigLoader.mergeConfig(config, configParam)));
+      .then((config) => (ConfigLoader.mergeConfig(config, configParam)));
   }
 
   /**
@@ -205,9 +205,9 @@ export class ConfigLoader {
     // when shouldIgnoreConfigEmbedded is true
     // ignore most of the config with the exception of the parentOrigin and region
     const parentOrigin = config.ui && config.ui.parentOrigin;
-    if (this.options &&
-      this.options.shouldIgnoreConfigWhenEmbedded &&
-      url.indexOf('lexWebUiEmbed=true') !== -1) {
+    if (this.options
+      && this.options.shouldIgnoreConfigWhenEmbedded
+      && url.indexOf('lexWebUiEmbed=true') !== -1) {
       return {
         ui: { parentOrigin },
         region: config.region,
@@ -247,13 +247,13 @@ export class ConfigLoader {
         let value = baseConfig[key];
         // merge from source if its value is not empty
         if (key in srcConfig && !isEmpty(srcConfig[key])) {
-          value = (typeof baseConfig[key] === 'object') ?
+          value = (typeof baseConfig[key] === 'object')
             // recursively merge sub-objects in both directions
-            {
+            ? {
               ...ConfigLoader.mergeConfig(srcConfig[key], baseConfig[key]),
               ...ConfigLoader.mergeConfig(baseConfig[key], srcConfig[key]),
-            } :
-            srcConfig[key];
+            }
+            : srcConfig[key];
         }
         mergedConfig[key] = value;
         return mergedConfig;

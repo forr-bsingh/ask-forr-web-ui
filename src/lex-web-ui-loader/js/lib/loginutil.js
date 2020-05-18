@@ -123,4 +123,6 @@ function isTokenExpired(token) {
   return false;
 }
 
-export { logout, login, completeLogin, completeLogout, getAuth, refreshLogin, isTokenExpired };
+export {
+  logout, login, completeLogin, completeLogout, getAuth, refreshLogin, isTokenExpired,
+};
