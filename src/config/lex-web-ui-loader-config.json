@@ -1,7 +1,7 @@
 {
   "region": "us-east-1",
   "cognito": {
-    "poolId": "us-east-1:7e5d004f-eec4-4adf-b168-21537c310a61",
+    "poolId": "",
     "appUserPoolClientId": "",
     "appUserPoolName": "",
     "appDomainName": "",
@@ -10,20 +10,20 @@
     "appUserPoolIdentityProvider": ""
   },
   "lex": {
-    "botName": "AskForr",
-    "botAlias": "$LATEST",
-    "initialText": "You can ask me for help. Just type \"Ask Forrester\" or click on the mic and say it.",
-    "initialSpeechInstruction": "Say 'Ask Forrester' to get started.",
+    "botName": "",
+    "botAlias": "",
+    "initialText": "",
+    "initialSpeechInstruction": "",
     "reInitSessionAttributesOnRestart": false,
     "region": "us-east-1"
   },
   "ui": {
     "parentOrigin": "",
-    "toolbarTitle": "Ask Forrester",
+    "toolbarTitle": "",
     "toolbarLogo": "",
-    "positiveFeedbackIntent": "Thumps Up",
-    "negativeFeedbackIntent": "Thumps Down",
-    "helpIntent": "help",
+    "positiveFeedbackIntent": "",
+    "negativeFeedbackIntent": "",
+    "helpIntent": "",
     "enableLogin": false,
     "AllowSuperDangerousHTMLInMessage": false,
     "shouldDisplayResponseCardTitle": false,
