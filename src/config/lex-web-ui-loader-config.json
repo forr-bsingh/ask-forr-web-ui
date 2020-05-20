@@ -19,7 +19,7 @@
   },
   "ui": {
     "parentOrigin": "",
-    "toolbarTitle": "Ask Forrester",
+    "toolbarTitle": "askForr",
     "toolbarLogo": "",
     "positiveFeedbackIntent": "Thumbs up",
     "negativeFeedbackIntent": "Thumbs down",
